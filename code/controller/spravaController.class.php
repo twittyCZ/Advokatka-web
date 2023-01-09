@@ -56,13 +56,14 @@ class spravaController implements IController {
             $_POST['registruj'] == "registruj") {
             $email = htmlspecialchars($_POST['email']);
             $heslo = htmlspecialchars($_POST['password']);
-            $username = htmlspecialchars($_POST['username']);
+            $username = htmlspecialch+ars($_POST['username']);
             if ($username == null || $heslo == null || $email == null) {
                 $tplData['povedloSe'] = false;
                 $tplData['login'] = "Přidání zaměstnance " . $username . " ne nezdařilo. Musíte vyplnit všechny údaje!";
             } else {
-                $isRegistered = $this->db->getAUser($username, $email);
-                if (!count($isRegistered)) {
+                $isRegistered1 = $this->db->getAUserByEmail($email);
+                $isRegistered2 = $this->db->getAUserByName($username);
+                if(!count($isRegistered2) && !count($isRegistered1)){
                     $tplData['povedloSe'] = $this->db->registrujUzivatele($email, $username, $heslo, 2);
                     $tplData['login'] = "Registrace se zdařila! Vítejte " . $username;
                 } else {
@@ -101,13 +102,12 @@ class spravaController implements IController {
                 }
             }
         }
-
 		//Přidání nové sluzby
 		if (isset($_POST['pridejSluzbu']) and isset($_POST['nazevSluzby']) and
 			isset($_POST['cenaSluzby']) and $_POST['pridejSluzbu'] == "pridejSluzbu") {
             $nazevSluzby = htmlspecialchars($_POST['nazevSluzby']);
             $cena = htmlspecialchars($_POST['cenaSluzby']);
-            if ($nazevSluzby == null || cena == null) {
+            if ($nazevSluzby == null || $cena == null) {
                 $tplData['povedloSe'] = false;
                 $tplData['login'] = "Přidání služby " . $nazevSluzby . " ne nezdařilo. Musíte vyplnit všechny údaje!";
             } else {
