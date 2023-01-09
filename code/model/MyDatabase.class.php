@@ -112,7 +112,7 @@ class MyDatabase
     }
 
     /**
-     * Získání uživatele podle Emailu.
+     * Získání uživatele podle Emailu a jméma.
      *
      * @param string $email Email pro vyhledání v databízi.
      * @return array    Pole se vsemi uživateli (vždycky bude pouze jeden uživatel).
@@ -129,7 +129,42 @@ class MyDatabase
             return null;
         }
     }
+    /**
+     * Získání uživatele podle jmena.
+     *
+     * @param string $email Email pro vyhledání v databízi.
+     * @return array    Pole se vsemi uživateli (vždycky bude pouze jeden uživatel).
+     */
+    public function getAUserByName($username): ?array
+    {
+        $q = "SELECT * FROM " . TABLE_USER . " WHERE username=:username;";
+        $user = $this->pdo->prepare($q);
+        $user->bindValue(":username", $username);
+        if ($user->execute()) {
+            return $user->fetchAll();
+        } else {
+            return null;
+        }
+    }
 
+        /**
+     * Získání uživatele podle Emailu.
+     *
+     * @param string $email Email pro vyhledání v databízi.
+     * @return array    Pole se vsemi uživateli (vždycky bude pouze jeden uživatel).
+     */
+    public function getAUserByEmail($email): ?array
+    {
+        $q = "SELECT * FROM " . TABLE_USER . " WHERE email=:uEmail;";
+        $user = $this->pdo->prepare($q);
+        $user->bindValue(":uEmail", $email);
+
+        if ($user->execute()) {
+            return $user->fetchAll();
+        } else {
+            return null;
+        }
+    }
     /**
      * Získání všech sluzeb, které jsou v jedné objednávce
      *
