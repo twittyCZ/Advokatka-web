@@ -55,13 +55,14 @@ class registraceController
             $email = htmlspecialchars($_POST['email']);
             $heslo = htmlspecialchars($_POST['password']);
             $username = htmlspecialchars($_POST['username']);
-            $isRegistered = $this->db->getAUser($username,$email);
-            if(!count($isRegistered)){
+            $isRegistered1 = $this->db->getAUserByEmail($email);
+            $isRegistered2 = $this->db->getAUserByName($username);
+            if(!count($isRegistered2) && !count($isRegistered1)){
                 $tplData['povedloSe'] = $this->db->registrujUzivatele($email,$username,$heslo);
                 $tplData['login'] = "Registrace se zdařila, nyní se můžete přihlásit!";
             } else {
                 $tplData['povedloSe'] = false;
-                $tplData['login'] = "Registrace se nezdařila";
+                $tplData['login'] = "Registrace se nezdařila. Takovýto uživatel již existuje.";
             }
         }
 
