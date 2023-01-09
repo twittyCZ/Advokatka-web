@@ -1,0 +1,58 @@
+/**************Carousel************************/
+.carousel {
+  margin-bottom: 4rem;
+}
+
+.carousel-caption {
+  bottom: 3rem;
+  z-index: 10;
+}
+
+.carousel-item {
+  height: 32rem;
+}
+
+.carousel-item > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  height: 32rem;
+}
+
+/************** 2 okna pod carouselem *********************/
+
+.marketing .col-lg-6 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+.marketing h2 {
+  font-weight: 400;
+}
+.marketing .col-lg-6 p {
+  margin-right: .75rem;
+  margin-left: .75rem;
+}
+
+/*************** REST ********************/
+.highlight{
+  font-size: 1.7rem;
+}
+
+footer{
+ /* background-color: #dcdcdc;*/
+  background-color: #007bff;
+  font-size: 0.8rem;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+.headline{
+  font-weight: bold;
+}
+.floating{
+
+}
+.floated{
+  float: right;
+}
