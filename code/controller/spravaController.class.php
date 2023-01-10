@@ -50,13 +50,15 @@ class spravaController implements IController {
 			$tplData['pravo'] = null;
 		}
 
-		//Přidání nového zaměstnance
+        /**
+         * Přidání nového zaměstnance
+         */
         if (isset($_POST['registruj']) and isset($_POST['email']) and
             isset($_POST['password']) and isset($_POST['username']) and
             $_POST['registruj'] == "registruj") {
             $email = htmlspecialchars($_POST['email']);
             $heslo = htmlspecialchars($_POST['password']);
-            $username = htmlspecialch+ars($_POST['username']);
+            $username = htmlspecialchars($_POST['username']);
             if ($username == null || $heslo == null || $email == null) {
                 $tplData['povedloSe'] = false;
                 $tplData['login'] = "Přidání zaměstnance " . $username . " ne nezdařilo. Musíte vyplnit všechny údaje!";
@@ -68,12 +70,14 @@ class spravaController implements IController {
                     $tplData['login'] = "Registrace se zdařila! Vítejte " . $username;
                 } else {
                     $tplData['povedloSe'] = false;
-                    $tplData['login'] = "Je nám líto, ale registrace se nezdařila. Nejspíše už je tento email použit.";
+                    $tplData['login'] = "Je nám líto, ale registrace se nezdařila. Nejspíše už je tento email nebo jmeno použito.";
                 }
             }
         }
 
-        //odebrání zaměstnance
+        /**
+         * Odebrání zaměstnance
+         */
         if (isset($_POST['smazUzivatele']) and (isset($_POST['email']) and
             isset($_POST['password']) and isset($_POST['username']))
             and $_POST['smazUzivatele'] == "smazUzivatele") {
@@ -102,7 +106,9 @@ class spravaController implements IController {
                 }
             }
         }
-		//Přidání nové sluzby
+        /**
+         * Přidání nové služby
+         */
 		if (isset($_POST['pridejSluzbu']) and isset($_POST['nazevSluzby']) and
 			isset($_POST['cenaSluzby']) and $_POST['pridejSluzbu'] == "pridejSluzbu") {
             $nazevSluzby = htmlspecialchars($_POST['nazevSluzby']);
@@ -121,7 +127,9 @@ class spravaController implements IController {
                 }
             }
         }
-        // Odebrani sluzby
+        /**
+         * Odebrání služby
+         */
         if (isset($_POST['odeberSluzbu']) and isset($_POST['nazevSluzby']) and
             isset($_POST['cenaSluzby'])  and $_POST['odeberSluzbu'] == "odeberSluzbu") {
             $nazevSluzby = htmlspecialchars($_POST['nazevSluzby']);
