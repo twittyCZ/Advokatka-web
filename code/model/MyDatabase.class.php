@@ -290,11 +290,10 @@ class MyDatabase
      */
     public function odeberSluzbu($nazev, $cena): bool
     {
-
         $whereStatement = "typ_sluzby='$nazev' AND cena='$cena'";
-        $q = "DELETE FROM ".TABLE_SLUZBY." WHERE $whereStatement";
+        $q = "DELETE FROM ".TABLE_SLUZBY." WHERE typ_sluzby=:nazev AND cena=:cena;";
 
-        $vystup = $this->executeQuery($q);
+        $vystup = $this->pdo->prepare($q);
 
         $vystup->bindValue(":nazev", $nazev);
         $vystup->bindValue(":cena", $cena);
@@ -349,16 +348,17 @@ class MyDatabase
     /**
      * Ziskani konkretniho hesla uzivatele dle emailu uzivatele
      *
-     * @param int $email       email.
-     * @return array        Data nalezeneho prava.
+     * @param string $email       email uživatele
      */
    public function getPasswordByEmail(string $email)
    {
-       $password = $this->selectAtributFromTable(TABLE_USER,  "email='$email'");
-       if (empty($password)) {
-           return null;
+
+       $q = "SELECT password FROM ".TABLE_USER." WHERE email = :email";
+       $vystup = $this->pdo->prepare($q);
+       if($vystup->execute(array( ":email" => $email ))){
+           return $vystup->fetch();
        } else {
-           return $password;
+           return null;
        }
    }
 
@@ -370,11 +370,13 @@ class MyDatabase
      */
     public function getPassword(string $email, string  $username)
     {
-        $password = $this->selectAtributFromTable(TABLE_USER,  "email='$email' AND username='$username'");
-        if (empty($password)) {
-            return null;
+
+        $q = "SELECT password FROM ".TABLE_USER." WHERE email = :email AND username=:username;";
+        $vystup = $this->pdo->prepare($q);
+        if($vystup->execute(array( ":email" => $email, ":username" => $username))){
+            return $vystup->fetch();
         } else {
-            return $password;
+            return null;
         }
     }
 
@@ -420,10 +422,9 @@ class MyDatabase
      */
     public function smazZamestnance($username): bool
     {
-        $whereStatement = "username='$username'";
-        $q = "DELETE FROM ".TABLE_USER. " WHERE $whereStatement";
+        $q = "DELETE FROM ".TABLE_USER. " WHERE username=:username;";
 
-        $vystup = $this->executeQuery($q);
+        $vystup = $this->pdo->prepare($q);
         $vystup->bindValue(":username", $username);
 
         if ($vystup->execute()) {
